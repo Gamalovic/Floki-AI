@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '192.168.43.84',
+    'project-floki.herokuapp.com',
 ]
 
 
