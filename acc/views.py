@@ -104,7 +104,7 @@ class Msg(APIView):
                     result=dialogAiml(message['message']['text'])
                     print("#######")
                     print(message['message']['text'])
-                    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token={EAAO3eCzKNI4BAPk5d96ZArJ6QmY8Pv8pKwhcDckbnWzpaT5rHbsIr8H8MPeZCPJ1KaxZCwBtyjAgVpiB66qZBQ1ydrHL3irumlZA5uIFT8Vi3ZB24kfT8cAfOagjOjCQyGves6azjSf5JDohTkCYeTx5zzOhdDSlNKrZC5trYDiWxFbhryYZBFAacqN4ozhDRFYZD}' 
+                    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=EAAO3eCzKNI4BAPk5d96ZArJ6QmY8Pv8pKwhcDckbnWzpaT5rHbsIr8H8MPeZCPJ1KaxZCwBtyjAgVpiB66qZBQ1ydrHL3irumlZA5uIFT8Vi3ZB24kfT8cAfOagjOjCQyGves6azjSf5JDohTkCYeTx5zzOhdDSlNKrZC5trYDiWxFbhryYZBFAacqN4ozhDRFYZD' 
                     response_msg = json.dumps({"messaging_type":"UPDATE","recipient":{"id":message['sender']['id']}, "message":{"text":result}})
                     status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
                     print("#######")
