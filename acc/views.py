@@ -40,13 +40,21 @@ from acc.serializers import UserLoginSerializer
 
 from django.contrib.auth.models import User
 from rest_framework import viewsets
+from django.views import generic
+from django.http.response import HttpResponse
 #################################################################################
 ############## Annoying imports #################################################
 #################################################################################
 
 
 
-
+class FlokiBotView(generic.View):
+    def get(self, request, *args, **kwargs):
+        if self.request.GET['hub.verify_token'] == 'floki':
+            print("success !")
+            return HttpResponse(self.request.GET['hub.challenge'])
+        else:
+            return HttpResponse('Error, invalid token')
 
 
 
