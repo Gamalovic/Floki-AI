@@ -91,6 +91,8 @@ class Msg(APIView):
     def post(self, request, *args, **kwargs):
         # Converts the text payload into a python dictionary
         incoming_message = json.loads(self.request.body.decode('utf-8'))
+        print("#######")
+        print(incoming_message)
         # Facebook recommends going through every entry since they might send
         # multiple messages in a single call during high load
         for entry in incoming_message['entry']:
@@ -100,12 +102,15 @@ class Msg(APIView):
                 if 'message' in message:
                     # Print the message to the terminal
                     result=dialogAiml(message['message']['text'])
-
+                    print("#######")
+                    print(message['message']['text'])
                     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token={EAAO3eCzKNI4BAPk5d96ZArJ6QmY8Pv8pKwhcDckbnWzpaT5rHbsIr8H8MPeZCPJ1KaxZCwBtyjAgVpiB66qZBQ1ydrHL3irumlZA5uIFT8Vi3ZB24kfT8cAfOagjOjCQyGves6azjSf5JDohTkCYeTx5zzOhdDSlNKrZC5trYDiWxFbhryYZBFAacqN4ozhDRFYZD}' 
                     response_msg = json.dumps({"recipient":{"id":message['sender']['id']}, "message":{"text":result}})
                     status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
-                    
-                    print(message)   
+                    print("#######")
+                    print(message)
+                    print("#######")
+                    print(status.json())   
                     print(result) 
                      
         return HttpResponse()
