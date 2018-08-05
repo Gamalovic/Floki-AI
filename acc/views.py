@@ -95,15 +95,22 @@ class Msg(APIView):
         print(incoming_message)
         # Facebook recommends going through every entry since they might send
         # multiple messages in a single call during high load
-        result=dialogAiml(incoming_message['entry']['messaging']['message']['text'])
-        
-        post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=EAAO3eCzKNI4BAPk5d96ZArJ6QmY8Pv8pKwhcDckbnWzpaT5rHbsIr8H8MPeZCPJ1KaxZCwBtyjAgVpiB66qZBQ1ydrHL3irumlZA5uIFT8Vi3ZB24kfT8cAfOagjOjCQyGves6azjSf5JDohTkCYeTx5zzOhdDSlNKrZC5trYDiWxFbhryYZBFAacqN4ozhDRFYZD' 
-        response_msg = json.dumps({"messaging_type":"UPDATE","recipient":{"id":incoming_message['entry']['messaging']['recipient']['id']}, "message":{"text":result}})
-        status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
-        
-        print("#######")
-        print(status.json())   
-        print(result) 
+        for entry in incoming_message['entry']:
+            for message in entry['messaging']:
+                # Check to make sure the received call is a message call
+                # This might be delivery, optin, postback for other events 
+                if 'message' in message:
+                    # Print the message to the terminal
+                    result=dialogAiml(message['message']['text'])
+                    print("#######")
+                    print(message['message']['text'])
+                    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=EAAO3eCzKNI4BAPk5d96ZArJ6QmY8Pv8pKwhcDckbnWzpaT5rHbsIr8H8MPeZCPJ1KaxZCwBtyjAgVpiB66qZBQ1ydrHL3irumlZA5uIFT8Vi3ZB24kfT8cAfOagjOjCQyGves6azjSf5JDohTkCYeTx5zzOhdDSlNKrZC5trYDiWxFbhryYZBFAacqN4ozhDRFYZD' 
+                    response_msg = json.dumps({"recipient":{"id":message['recipient']['id']}, "message":{"text":result}})
+                    status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
+                    print("#######")
+                    print(message)
+                    printz   
+                    print(result) 
                      
         return HttpResponse()
 
