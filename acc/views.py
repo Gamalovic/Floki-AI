@@ -95,12 +95,14 @@ class Msg(APIView):
         print(incoming_message)
         # Facebook recommends going through every entry since they might send
         # multiple messages in a single call during high load
+        i=0
         for entry in incoming_message['entry']:
             for message in entry['messaging']:
                 # Check to make sure the received call is a message call
                 # This might be delivery, optin, postback for other events 
                 if 'message' in message:
                     # Print the message to the terminal
+                    i+=1
                     result=dialogAiml(message['message']['text'])
                     print("#######")
                     print(message['message']['text'])
@@ -109,7 +111,7 @@ class Msg(APIView):
                     status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
                     print("#######")
                     print(message)
-                    printz   
+                      
                     print(result) 
                      
         return HttpResponse()
