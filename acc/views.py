@@ -108,7 +108,7 @@ class Msg(APIView):
                     
                     
                     response_msg = json.dumps({"recipient":{"id":message['sender']['id']}, "message":{"text":message['message']['text']}})
-                    status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
+                    status = requests.post(post_message_url, data=result)
                     
                     
                     print("#######")
