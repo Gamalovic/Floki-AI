@@ -73,6 +73,9 @@ class Msg(APIView):
     ##        print(res)
     ##        return Response(res)
         #return Response(serializer.errors)
+
+
+        
     def get(self, request, *args, **kwargs):
         if self.request.GET['hub.verify_token'] == 'floki':
             print("success !")
@@ -106,32 +109,32 @@ class Msg(APIView):
 
     ## AIML
 
-    def post(self, request):
-        message  = request.data['name']
+    # def post(self, request):
+    #     message  = request.data['name']
 
-        filtered_Message=Filtering(message)
-        if(filtered_Message =="schedule"):
-            queryset = schedule.objects.all()
-            r=serialize('json', queryset)
-            jsonData=json.loads(r)
-            response={"data":jsonData,"source":"db"}
-            return Response(json.dumps(response))
+    #     filtered_Message=Filtering(message)
+    #     if(filtered_Message =="schedule"):
+    #         queryset = schedule.objects.all()
+    #         r=serialize('json', queryset)
+    #         jsonData=json.loads(r)
+    #         response={"data":jsonData,"source":"db"}
+    #         return Response(json.dumps(response))
             
         
-        elif(filtered_Message=="event"):
-            queryset = Event.objects.all()
-            r = serialize('json', queryset)
-            jsonData = json.loads(r)
-            response={"data":jsonData,"source":"event"}
-            return Response(json.dumps(response))
+    #     elif(filtered_Message=="event"):
+    #         queryset = Event.objects.all()
+    #         r = serialize('json', queryset)
+    #         jsonData = json.loads(r)
+    #         response={"data":jsonData,"source":"event"}
+    #         return Response(json.dumps(response))
             
 
-        else:
-            if request.method=='POST':
+    #     else:
+    #         if request.method=='POST':
             
-                res=dialogAiml(message)
-                response={"data":res,"source":"AI"}
-                return Response(json.dumps(response))
+    #             res=dialogAiml(message)
+    #             response={"data":res,"source":"AI"}
+    #             return Response(json.dumps(response))
         
 ################################### sign up API #######################################
 
@@ -171,5 +174,8 @@ class userLoginView(APIView):
 class userView(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
+
+
+
 
 
