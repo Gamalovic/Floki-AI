@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '192.168.43.84',
     'project-floki.herokuapp.com',
+    '2b3cfcdf.ngrok.io',
 ]
 
 
